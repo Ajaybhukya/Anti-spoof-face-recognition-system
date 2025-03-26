@@ -14,5 +14,3 @@ def send_email(id,name,to_mail):
         s.quit()
     except Exception as e:
         print(f"Error sending email: {e}")
-# send_email("1234","sai","projectface1213@gmail.com")
-# print("Email sent successfully!")

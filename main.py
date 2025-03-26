@@ -567,8 +567,8 @@ elif selected == "View Attendance":
 
     # Function to send attendance report via email
     def send_email(to_email, student_name, attendance_data):
-        sender_email = "projectface1213@gmail.com"
-        sender_password = "gdkb zwnh akss wpjd"
+        sender_email = ""
+        sender_password = ""
         subject = f"Avanthi Attendance Management System"
 
         # Convert DataFrame to HTML table
@@ -852,7 +852,7 @@ elif selected == "Home":
         <div style="text-align: center; font-size: 14px; color: gray;">
             © 2025 Avanthi Attendance Management System. All rights reserved.
             <br>
-            For inquiries, contact us at <a href="mailto:projectface1213@gmail.com" style="text-decoration: none;">support@avanthiams.com</a> or visit our website: <a href="https://aietg.ac.in/" style="text-decoration: none;">www.avanthi.com</a>.
+            For inquiries, contact us at <a href="mailto:" style="text-decoration: none;">support@avanthiams.com</a> or visit our website: <a href="https://aietg.ac.in/" style="text-decoration: none;">www.avanthi.com</a>.
         </div>
         </footer>
         """,
@@ -1031,8 +1031,8 @@ elif selected == "Contact Us":
     st.title("👨‍💻 Mail for the Admin")
     st.markdown("Use this form to send an email to the admin.")
 
-    mymail = "projectface1213@gmail.com"
-    password = "gdkb zwnh akss wpjd"  # Replace with your app password
+    mymail = ""
+    password = ""  # Replace with your app password
 
     subject = st.text_input("Subject", "", placeholder="Enter your subject here...")
     id_field = st.text_input("ID", "", placeholder="Enter proper ID here...")
