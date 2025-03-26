@@ -1,4 +1,3 @@
-import datetime
 import smtplib
 import base64
 from io import BytesIO
@@ -6,7 +5,6 @@ import pymysql
 import matplotlib.pyplot as plt
 from streamlit_autorefresh import st_autorefresh
 import time
-import streamlit as st
 from streamlit_option_menu import option_menu
 import pandas as pd
 from PIL import Image
@@ -17,8 +15,15 @@ from text_to_speech import text_to_speech_direct
 from dataset_creation_dlib import dataset_creation
 from database_management import delete_images
 import speech_recognition as sr
+import cv2
+import os
+import streamlit as st
+import tempfile
+import datetime
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
 
 def get_db_connection():
     return pymysql.connect(
@@ -962,18 +967,61 @@ elif selected == "AI-Chatbot":
             st.rerun()
 elif selected == "Contact Us":
 
-    # Function to send email
-    def send_email(mymail, password, subject, content, id_field):
+
+    def capture_image():
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as temp_file:
+            filename = temp_file.name
+
+        cap = cv2.VideoCapture(0)
+        ret, frame = cap.read()
+        if ret:
+            # Add timestamp to the image
+            timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            font = cv2.FONT_HERSHEY_SIMPLEX
+            font_scale = 0.7
+            color = (0, 255, 0)  # Green
+            thickness = 2
+            position = (10, frame.shape[0] - 10)
+
+            cv2.putText(frame, timestamp, position, font, font_scale, color, thickness, cv2.LINE_AA)
+            cv2.imwrite(filename, frame)
+        cap.release()
+        return filename if ret else None
+
+
+    def send_email_with_attachment(mymail, password, subject, content, id_field):
         try:
-            if (subject == "") or (content == "") or (id_field == ""):
+            if not subject or not content or not id_field:
                 st.error("Fill all fields!")
                 return
-            with smtplib.SMTP('smtp.gmail.com', 587) as s:
-                s.starttls()
-                s.login(mymail, password)
-                mail_content = f"Subject: {subject}\n\nID: {id_field}\n\n{content}"
-                s.sendmail(mymail, mymail, mail_content)
-            st.success("Email sent successfully!")
+
+            image_path = capture_image()
+            if not image_path:
+                st.error("Failed to capture image.")
+                return
+
+            msg = MIMEMultipart()
+            msg['From'] = mymail
+            msg['To'] = mymail
+            msg['Subject'] = subject
+
+            body = f"ID: {id_field}\n\n{content}"
+            msg.attach(MIMEText(body, 'plain'))
+
+            with open(image_path, "rb") as attachment:
+                part = MIMEBase('application', 'octet-stream')
+                part.set_payload(attachment.read())
+                encoders.encode_base64(part)
+                part.add_header('Content-Disposition', f'attachment; filename={os.path.basename(image_path)}')
+                msg.attach(part)
+
+            with smtplib.SMTP('smtp.gmail.com', 587) as server:
+                server.starttls()
+                server.login(mymail, password)
+                server.sendmail(mymail, mymail, msg.as_string())
+
+            # st.success("Email sent successfully!")
+            os.remove(image_path)  # Delete the temporary image file after sending
             return True
         except Exception as e:
             st.error(f"Failed to send email: {e}")
@@ -983,7 +1031,6 @@ elif selected == "Contact Us":
     st.title("👨‍💻 Mail for the Admin")
     st.markdown("Use this form to send an email to the admin.")
 
-    # Email form
     mymail = "projectface1213@gmail.com"
     password = "gdkb zwnh akss wpjd"  # Replace with your app password
 
@@ -991,8 +1038,7 @@ elif selected == "Contact Us":
     id_field = st.text_input("ID", "", placeholder="Enter proper ID here...")
     content = st.text_area("Content", "", placeholder="Enter your message here...")
 
-    # Send button
     if st.button("Send Email"):
         with st.spinner("Sending email..."):
-            if send_email(mymail, password, subject, content, id_field):
-                text_to_speech_direct("Email sent successfully  for the admin")
+            if send_email_with_attachment(mymail, password, subject, content, id_field):
+                st.success("Email with attachment sent successfully!")
