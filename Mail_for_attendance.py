@@ -1,8 +1,8 @@
 import smtplib
 from datetime import date
 def send_email(id,name,to_mail):
-    mymail = 'projectface1213@gmail.com'
-    password = 'gdkb zwnh akss wpjd'  # Replace with your app password
+    mymail = ''
+    password = ''  # Replace with your app password
     subject="Avanthi Attendance Management System"
     content=f"Hello ID: {id} Name: {name.title()} ! \n Today({date.today()}) Attendance Marked Sucessful"
     try:
