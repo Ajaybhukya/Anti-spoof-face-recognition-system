@@ -57,7 +57,15 @@ Anti-Spoof-Smart-Attendance-System/
 ### 📌 Admin Page
 ![](Screenshot/s1.png)
 
-### 📌 After prediction
+### 📌 ChatBot
+![](Screenshot/s5.png)
+
+### 📌 Student Attendance Checker
+![](Screenshot/s3.png)
+
+### 📌 Admin Mailing
+![](Screenshot/s4.png)
+
 
 
 
