@@ -4,8 +4,6 @@
 
 The **Anti-Spoof Smart Attendance System** is an advanced AI-powered solution designed to automate attendance management with high security and precision. Unlike traditional systems that are vulnerable to spoofing attempts (e.g., photos or videos), this system combines **face recognition**, **anti-spoofing validation**, **real-time voice feedback**, and **automated email reporting**—making it ideal for institutions and enterprises demanding secure and seamless attendance tracking.
 
-Developed using Python and computer vision technologies, the project reflects a deep understanding of **machine learning**, **image processing**, **system integration**, and **automation workflows**. It's optimized for **real-world deployment** and demonstrates not just technical know-how but also **practical engineering problem-solving**—a quality every recruiter values.
-
 ---
 
 ## 🧠 Key Features
@@ -49,6 +47,7 @@ Anti-Spoof-Smart-Attendance-System/
 ├── text_to_speech.py             # Voice feedback module
 ├── shape_predictor_68_face_landmarks.dat  # Facial landmarks data
 └── .git/                         # Git version control files
+```
 ## 🌍 Real-World Applications
 
 - 🎓 **Educational Institutions** – Automate student attendance securely and efficiently.
