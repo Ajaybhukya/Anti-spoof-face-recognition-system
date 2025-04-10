@@ -52,6 +52,15 @@ Anti-Spoof-Smart-Attendance-System/
 ├── shape_predictor_68_face_landmarks.dat  # Facial landmarks data
 └── .git/                         # Git version control files
 ```
+## 📷 Screenshots
+
+### 📌 Admin Page
+![](Screenshot/s1.png)
+
+### 📌 After prediction
+
+
+
 ## 🌍 Real-World Applications
 
 - 🎓 **Educational Institutions** – Automate student attendance securely and efficiently.
